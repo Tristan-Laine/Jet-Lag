@@ -23,11 +23,11 @@ public class PlayerRotation : MonoBehaviour
 
         if (direction > 0f)
         {
-            targetRotation = Quaternion.Euler(0, 90, 0);
+            targetRotation = Quaternion.Euler(0, 120, 0);
         }
         else if (direction < 0f)
         {
-            targetRotation = Quaternion.Euler(0, -90, 0);
+            targetRotation = Quaternion.Euler(0, -120, 0);
         }
         else
         {

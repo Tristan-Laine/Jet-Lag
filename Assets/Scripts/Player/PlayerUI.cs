@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
-    public PlayerMovement playerMovement;
+    public PlayerJetPack playerJetPack;
 
     public Image ReservoirBar;
     public Image ThrustForceBar;
@@ -20,22 +20,22 @@ public class PlayerUI : MonoBehaviour
 
     void Start()
     {
-        if (playerMovement != null)
+        if (playerJetPack != null)
         {
-            playerMovement.reservoirThrustChanged.AddListener(UpdateReservoirUI);
-            playerMovement.thrustForceChanged.AddListener(UpdateThrustForcedUI);
+            playerJetPack.reservoirThrustChanged.AddListener(UpdateReservoirUI);
+            playerJetPack.thrustForceChanged.AddListener(UpdateThrustForcedUI);
 
-            UpdateReservoirUI(playerMovement.reservoir, playerMovement.reservoirMax);
-            UpdateThrustForcedUI(playerMovement.thrustForce, playerMovement.thrustForceMax);
+            UpdateReservoirUI(playerJetPack.reservoir, playerJetPack.reservoirMax);
+            UpdateThrustForcedUI(playerJetPack.thrustForce, playerJetPack.thrustForceMax);
         }
     }
 
     private void OnDestroy()
     {
-        if (playerMovement != null)
+        if (playerJetPack != null)
         {
-            playerMovement.reservoirThrustChanged.RemoveListener(UpdateReservoirUI);
-            playerMovement.thrustForceChanged.RemoveListener(UpdateThrustForcedUI);
+            playerJetPack.reservoirThrustChanged.RemoveListener(UpdateReservoirUI);
+            playerJetPack.thrustForceChanged.RemoveListener(UpdateThrustForcedUI);
         }
     }
 
