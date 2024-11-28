@@ -8,7 +8,9 @@ public class Checkpoint : MonoBehaviour
 
     public ParticleSystem masterParticleSystem;
     public Light zoneLight;
+    public AudioSource fireSound;
     public float lightTransitionDuration = 1f;
+    public float soundTransitionDuration = 1f;
 
     void Start()
     {
@@ -33,6 +35,9 @@ public class Checkpoint : MonoBehaviour
 
         if (zoneLight != null)
             StartCoroutine(ChangeLightIntensity(zoneLight, zoneLight.intensity, 2.5f));
+
+        if (fireSound != null)
+            StartCoroutine(ChangeSoundVolume(fireSound, fireSound.volume, 0.3f));
     }
 
     private void DeactivateMasterEffects()
@@ -42,6 +47,9 @@ public class Checkpoint : MonoBehaviour
 
         if (zoneLight != null)
             StartCoroutine(ChangeLightIntensity(zoneLight, zoneLight.intensity, 0f));
+
+        if (fireSound != null)
+            StartCoroutine(ChangeSoundVolume(fireSound, fireSound.volume, 0f));
     }
 
     private IEnumerator ChangeLightIntensity(Light light, float startIntensity, float targetIntensity)
@@ -62,5 +70,25 @@ public class Checkpoint : MonoBehaviour
 
         if (targetIntensity == 0f)
             light.enabled = false;
+    }
+
+        private IEnumerator ChangeSoundVolume(AudioSource audioSource, float startVolume, float targetVolume)
+    {
+        float elapsedTime = 0f;
+
+        if (targetVolume != 0f && !audioSource.isPlaying)
+            audioSource.Play();
+
+        while (elapsedTime < soundTransitionDuration)
+        {
+            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, elapsedTime / soundTransitionDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        audioSource.volume = targetVolume;
+
+        if (targetVolume == 0f)
+            audioSource.Stop();
     }
 }
